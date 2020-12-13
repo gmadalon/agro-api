@@ -14,7 +14,7 @@ import br.com.mgn.agro.dto.FarmGetDTO;
 public class FarmsApiDelegateImpl implements FarmsApiDelegate {
 
     @Override
-    public ResponseEntity<FarmDTO> getFarmById(Long id) {
+    public ResponseEntity<FarmDTO> getFarmById(String id) {
         // TODO Auto-generated method stub
         return FarmsApiDelegate.super.getFarmById(id);
     }
@@ -26,7 +26,7 @@ public class FarmsApiDelegateImpl implements FarmsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<FarmGetDTO>> getFarmsByPersonId(Long id) {
+    public ResponseEntity<List<FarmGetDTO>> getFarmsByPersonId(String id) {
         // TODO Auto-generated method stub
         return FarmsApiDelegate.super.getFarmsByPersonId(id);
     }
@@ -44,7 +44,7 @@ public class FarmsApiDelegateImpl implements FarmsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> updateFarm(FarmDTO body, Long id) {
+    public ResponseEntity<Void> updateFarm(FarmDTO body, String id) {
         // TODO Auto-generated method stub
         return FarmsApiDelegate.super.updateFarm(body, id);
     }

@@ -12,17 +12,15 @@ import org.springframework.util.CollectionUtils;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
-import nonapi.io.github.classgraph.json.Id;
 
 @Document
 @ToString
-@EqualsAndHashCode
-public class Farm {
-
-    @Id
-    private Long id;
-
+@EqualsAndHashCode(callSuper=false)
+@NoArgsConstructor
+public class Farm extends AbstractEntity {
+  
     @Getter
     @DBRef
     private Person owner;
@@ -36,7 +34,7 @@ public class Farm {
     @Indexed
     private Set<String> keywords = new HashSet<>();
 
-    protected Farm(Person owner, String name, String description) {
+    public Farm(Person owner, String name, String description) {
         this.owner = owner;
         this.name = name;
         this.description = description;
