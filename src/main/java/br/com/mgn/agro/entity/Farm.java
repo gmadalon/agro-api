@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Document
@@ -22,15 +23,19 @@ import lombok.ToString;
 public class Farm extends AbstractEntity {
   
     @Getter
+    @Setter
     @DBRef
     private Person owner;
 
     @Getter
+    @Setter
     private String name;
 
     @Getter
+    @Setter
     private String description;
   
+    @Getter
     @Indexed
     private Set<String> keywords = new HashSet<>();
 
@@ -60,10 +65,6 @@ public class Farm extends AbstractEntity {
             } 
         }
 
-    }
-
-    public Set<String> getKeywords() {
-        return Collections.unmodifiableSet(this.keywords);
     }
 
     

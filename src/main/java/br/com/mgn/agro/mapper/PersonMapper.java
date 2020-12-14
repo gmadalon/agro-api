@@ -1,5 +1,7 @@
 package br.com.mgn.agro.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -17,5 +19,7 @@ public interface PersonMapper {
     PersonGetDTO toGetDto(Person entity);
 
     Person toEntity(PersonDTO dto);
+
+    List<PersonGetDTO> toDto(Iterable<Person> entity);
 
 }

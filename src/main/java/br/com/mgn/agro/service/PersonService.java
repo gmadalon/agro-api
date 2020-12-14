@@ -1,13 +1,19 @@
 package br.com.mgn.agro.service;
 
+import java.util.Optional;
+
 import br.com.mgn.agro.entity.Person;
 
 public interface PersonService {
     
     void create(Person person);
 
-    void delete(String id);
+    Person delete(String id);
 
-    void update(String id, Person person);
+    Person update(String id, Person person);
+
+    Iterable<Person> getAll();
+
+    Optional<Person> getById(String id);
     
 }

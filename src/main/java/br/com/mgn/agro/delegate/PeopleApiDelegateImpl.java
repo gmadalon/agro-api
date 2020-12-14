@@ -1,6 +1,7 @@
 package br.com.mgn.agro.delegate;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,26 +30,34 @@ public class PeopleApiDelegateImpl implements PeopleApiDelegate {
 
     @Override
     public ResponseEntity<Void> deletePerson(String id) {
-        personService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        ResponseEntity<Void> response = new ResponseEntity<>(HttpStatus.NO_CONTENT); 
+        Person person = personService.delete(id);
+        if(person != null) {
+            response = new ResponseEntity<>(HttpStatus.OK);
+        } 
+        return response;
     }
 
     @Override
     public ResponseEntity<List<PersonGetDTO>> getAllPeople() {
-        // TODO Auto-generated method stub
-        return PeopleApiDelegate.super.getAllPeople();
+        List<PersonGetDTO> peopleDto = PersonMapper.INSTANCE.toDto(personService.getAll());        
+        return new ResponseEntity<>(peopleDto, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<PersonDTO> getByPersonId(String id) {
-        // TODO Auto-generated method stub
-        return PeopleApiDelegate.super.getByPersonId(id);
+        ResponseEntity<PersonDTO> response = new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        Optional<Person> opPerson = personService.getById(id);  
+        if(opPerson.isPresent()) {
+            new ResponseEntity<>(PersonMapper.INSTANCE.toDto(opPerson.get()), HttpStatus.OK);
+        }    
+        return response;
     }
 
     @Override
     public ResponseEntity<Void> updatePerson(PersonDTO dto, String id) {
         Person person = PersonMapper.INSTANCE.toEntity(dto);
-        personService.update(id, person);        
+        personService.update(id, person);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     

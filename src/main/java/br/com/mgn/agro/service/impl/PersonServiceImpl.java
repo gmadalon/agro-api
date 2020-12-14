@@ -21,19 +21,39 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void delete(String id) {
-        personRepository.findById(id).ifPresent(personRepository::delete);
+    public Person delete(String id) {
+        Person personDeleted = null;
+        Optional<Person> opPerson = personRepository.findById(id);
+        if(opPerson.isPresent()) {
+            personDeleted = opPerson.get();
+            personRepository.delete(personDeleted);
+        }
+        return personDeleted;        
     }
 
     @Override
-    public void update(String id, Person person) {
+    public Person update(String id, Person person) {
+        Person personUpdated = null;
+
         Optional<Person> opPerson = personRepository.findById(id);       
         if( opPerson.isPresent() ) {
             Person dbPerson = opPerson.get();
             dbPerson.setEmail(person.getEmail());   
             dbPerson.setForename(person.getForename());
             dbPerson.setLastname(person.getLastname());
-            personRepository.save(dbPerson);
+            personUpdated = personRepository.save(dbPerson);
         }
+        return personUpdated;
     }
+
+    @Override
+    public Iterable<Person> getAll() {
+        return personRepository.findAll();
+    }
+
+    @Override
+    public Optional<Person> getById(String id) {
+        return personRepository.findById(id);
+    }
+
 }

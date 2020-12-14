@@ -2,21 +2,36 @@ package br.com.mgn.agro.delegate;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.mgn.agro.api.FarmsApiDelegate;
 import br.com.mgn.agro.dto.FarmDTO;
 import br.com.mgn.agro.dto.FarmGetDTO;
+import br.com.mgn.agro.entity.Farm;
+import br.com.mgn.agro.mapper.FarmMapper;
+import br.com.mgn.agro.service.FarmService;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class FarmsApiDelegateImpl implements FarmsApiDelegate {
+
+    private final FarmService farmService; 
 
     @Override
     public ResponseEntity<FarmDTO> getFarmById(String id) {
-        // TODO Auto-generated method stub
-        return FarmsApiDelegate.super.getFarmById(id);
+
+        ResponseEntity<FarmDTO> response = new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        Optional<Farm> opFarm = farmService.getById(id);  
+        if(opFarm.isPresent()) {
+            response = new ResponseEntity<FarmDTO>(FarmMapper.INSTANCE.toDto(opFarm.get()), HttpStatus.OK);
+        }    
+
+        return response;
     }
 
     @Override
@@ -38,15 +53,15 @@ public class FarmsApiDelegateImpl implements FarmsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> insertFarm(FarmDTO body) {
-        // TODO Auto-generated method stub
-        return FarmsApiDelegate.super.insertFarm(body);
+    public ResponseEntity<Void> insertFarm(FarmDTO dto) {
+        farmService.create(FarmMapper.INSTANCE.toEntity(dto));        
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> updateFarm(FarmDTO body, String id) {
-        // TODO Auto-generated method stub
-        return FarmsApiDelegate.super.updateFarm(body, id);
+    public ResponseEntity<Void> updateFarm(FarmDTO dto, String id) {
+        farmService.update(id, FarmMapper.INSTANCE.toEntity(dto));        
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
 }
