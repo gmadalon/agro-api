@@ -5,3 +5,4 @@ spring:
       username: root
       password: example
       database: test
+      auto-index-creation: true

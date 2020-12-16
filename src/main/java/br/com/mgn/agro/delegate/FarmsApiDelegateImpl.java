@@ -53,13 +53,13 @@ public class FarmsApiDelegateImpl implements FarmsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> insertFarm(FarmDTO dto) {
+    public ResponseEntity<FarmGetDTO> insertFarm(FarmDTO dto) {
         farmService.create(FarmMapper.INSTANCE.toEntity(dto));        
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> updateFarm(FarmDTO dto, String id) {
+    public ResponseEntity<FarmGetDTO> updateFarm(FarmDTO dto, String id) {
         farmService.update(id, FarmMapper.INSTANCE.toEntity(dto));        
         return new ResponseEntity<>(HttpStatus.OK);
     }

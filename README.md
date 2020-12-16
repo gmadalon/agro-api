@@ -14,16 +14,17 @@ Getting start:
 
 2. Install in your souce code editor the STS plugin
 3. Install lombok in your source code. See on https://projectlombok.org/  
-4. Import in your souce code editor (Eclipse, VS Code,.. ) the parent pom file.
-5. Start mongoDB using following comands:
+4. Start mongoDB using following comands:
 
     Go to:
     $projectFolder/src/test/resources/mongodb
 
     Run:
     docker-compose -f stack.yml up
-
-6. Run agro-api on Spring-boot Dashboard
+    
+5. Import in your souce code editor (Eclipse, VS Code,.. ) the parent pom file.
+6. Execute: mvn clean  generate-sources
+7. Run agro-api on Spring-boot Dashboard
 
 
 Tecnologies

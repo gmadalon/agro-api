@@ -22,10 +22,10 @@ public class PeopleApiDelegateImpl implements PeopleApiDelegate {
     private final PersonService personService;
 
     @Override
-    public ResponseEntity<Void> createPerson(PersonDTO dto) {
+    public ResponseEntity<PersonGetDTO> createPerson(PersonDTO dto) {
         Person person = PersonMapper.INSTANCE.toEntity(dto);
-        personService.create(person);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        person = personService.create(person);
+        return new ResponseEntity<>(PersonMapper.INSTANCE.toGetDto(person), HttpStatus.CREATED);
     }
 
     @Override
@@ -45,20 +45,24 @@ public class PeopleApiDelegateImpl implements PeopleApiDelegate {
     }
 
     @Override
-    public ResponseEntity<PersonDTO> getByPersonId(String id) {
-        ResponseEntity<PersonDTO> response = new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+    public ResponseEntity<PersonGetDTO> getByPersonId(String id) {
+        ResponseEntity<PersonGetDTO> response = new ResponseEntity<>(HttpStatus.NOT_FOUND); 
         Optional<Person> opPerson = personService.getById(id);  
         if(opPerson.isPresent()) {
-            new ResponseEntity<>(PersonMapper.INSTANCE.toDto(opPerson.get()), HttpStatus.OK);
+            response = new ResponseEntity<>(PersonMapper.INSTANCE.toGetDto(opPerson.get()), HttpStatus.OK);
         }    
         return response;
     }
 
     @Override
-    public ResponseEntity<Void> updatePerson(PersonDTO dto, String id) {
+    public ResponseEntity<PersonGetDTO> updatePerson(PersonDTO dto, String id) {
+        ResponseEntity<PersonGetDTO> response = new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         Person person = PersonMapper.INSTANCE.toEntity(dto);
-        personService.update(id, person);
-        return new ResponseEntity<>(HttpStatus.OK);
+        person = personService.update(id, person);
+        if( person != null ) {
+            response = new ResponseEntity<>(PersonMapper.INSTANCE.toGetDto(person), HttpStatus.OK);
+        }
+        return response;
     }
     
 }
