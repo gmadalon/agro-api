@@ -21,13 +21,13 @@ Getting start:
 
     Run:
     docker-compose -f stack.yml up
-    
+
 5. Import in your souce code editor (Eclipse, VS Code,.. ) the parent pom file.
 6. Execute: mvn clean  generate-sources
 7. Run agro-api on Spring-boot Dashboard
 
 
-Tecnologies
+Technologies
 ------------
 
 
